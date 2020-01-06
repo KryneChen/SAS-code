@@ -14,3 +14,13 @@ data _null_;
   call symput('xxxlist', trim(resolve('&xxxlist'))||' "'||trim(icd10)||'"');
 run;
 %put &xxxlist;
+
+proc sql noprint;
+  select ICD9, ICD10
+    into :xxxlist_icd9 separated by ' ',
+          xxxlist_icd10 separated by ' '
+    from aaa
+    where variable = 'abc';
+quit;
+%put &xxxlist_icd9;
+%put &xxxlist_icd10;
